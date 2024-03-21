@@ -1,0 +1,179 @@
+#!/bin/bash
+
+# see http://www.gnu.org/s/bash/manual/html_node/The-Set-Builtin.html
+set -o nounset  # exit on unitialized vars
+set -o errexit  # exit on [ $? != 0]
+set -o pipefail # exit on pipeline errors
+
+# show the main window when launching activity monitor
+defaults write com.apple.ActivityMonitor OpenMainWindow -bool true
+
+# show all processes in activity monitor
+defaults write com.apple.ActivityMonitor ShowCategory -int 0
+
+# automatically hide/show the dock
+defaults write com.apple.dock autohide -bool true
+
+# set hide/show delay
+defaults write com.apple.dock "autohide-delay" -float "0"
+
+# set dock to bottom
+defaults write com.apple.dock "orientation" -string "bottom"
+
+# disable recently used apps
+defaults write com.apple.dock "show-recents" -bool "false"
+
+# set dock titlesize
+defaults write com.apple.dock "tilesize" -int "50"
+
+# set dock window animation
+defaults write com.apple.dock "mineffect" -string "genie"
+
+# enable the opening of an application from the dock animations
+defaults write com.apple.dock launchanim -bool true
+
+# do not automatically rearrange spaces based on most recent use
+defaults write com.apple.dock mru-spaces -bool false
+
+# top right screen corner: no option
+defaults write com.apple.dock wvous-tr-corner -int 0
+defaults write com.apple.dock wvous-tr-modifier -int 0
+
+# bottom right screen corner: launchpad
+defaults write com.apple.dock wvous-br-corner -int 11
+defaults write com.apple.dock wvous-br-modifier -int 0
+
+# top lef screen corner:  no option
+defaults write com.apple.dock wvous-tr-corner -int 0
+defaults write com.apple.dock wvous-tr-modifier -int 0
+
+# bottom left screen corner: lock screen
+defaults write com.apple.dock wvous-bl-corner -int 13
+defaults write com.apple.dock wvous-bl-modifier -int 0
+
+# show the ~/library folder
+chflags nohidden ~/Library
+
+# use full posix path as window title
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+
+# disable all animations
+defaults write com.apple.finder DisableAllAnimations -bool true
+
+# search the current directory by default
+defaults write com.apple.finder FXDefaultSearchScope -string 'SCcf'
+
+# set finder sidebar size
+defaults write NSGlobalDomain "NSTableViewDefaultSizeMode" -int "2"
+
+# disable the warning before emptying the trash
+defaults write com.apple.finder WarnOnEmptyTrash -bool false
+
+# use list view in all finder windows by default
+defaults write com.apple.finder FXPreferredViewStyle -string 'Nlsv'
+
+# Set '$HOME/Desktop' as the default location for new Finder windows
+defaults write com.apple.finder NewWindowTarget -string 'PfDe'
+defaults write com.apple.finder NewWindowTargetPath -string 'file://$HOME/Desktop/'
+
+# show status bar
+defaults write com.apple.finder ShowStatusBar -bool true
+
+# allow text selection in Quick Look
+defaults write com.apple.finder QLEnableTextSelection -bool true
+
+# disable smart quotes as they’re annoying when typing code
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+
+# disable smart dashes as they’re annoying when typing code
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+
+# select items shown on desktop (hard drives, servers and removeable media)
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
+defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+
+# avoid creating .ds_store files on network volumes
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+# automatically open a new finder window when a volume is mounted
+defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
+defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
+defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
+
+# do not show recent tags
+defaults write com.apple.finder ShowRecentTags -bool false
+
+# disable the warning when changing a file extension
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+# show all filename extensions
+defaults write -g AppleShowAllExtensions -bool true
+
+# set icon size
+/usr/libexec/PlistBuddy -c 'Set :DesktopViewSettings:IconViewSettings:iconSize 62' ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c 'Set :StandardViewSettings:IconViewSettings:iconSize 62' ~/Library/Preferences/com.apple.finder.plist
+
+# set icon grid spacing size
+/usr/libexec/PlistBuddy -c 'Set :DesktopViewSettings:IconViewSettings:textSize 12' ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c 'Set :StandardViewSettings:IconViewSettings:textSize 12' ~/Library/Preferences/com.apple.finder.plist
+
+# set icon label position
+/usr/libexec/PlistBuddy -c 'Set :DesktopViewSettings:IconViewSettings:labelOnBottom true' ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c 'Set :StandardViewSettings:IconViewSettings:labelOnBottom true' ~/Library/Preferences/com.apple.finder.plist
+
+# show item info
+/usr/libexec/PlistBuddy -c 'Set :DesktopViewSettings:IconViewSettings:showItemInfo true' ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c 'Set :StandardViewSettings:IconViewSettings:showItemInfo true' ~/Library/Preferences/com.apple.finder.plist
+
+# set sort method
+/usr/libexec/PlistBuddy -c 'Set :DesktopViewSettings:IconViewSettings:arrangeBy none' ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c 'Set :StandardViewSettings:IconViewSettings:arrangeBy none' ~/Library/Preferences/com.apple.finder.plist
+
+# prevent photos from opening automatically when devices are plugged in
+defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
+
+# save screenshots to downloads
+defaults write com.apple.screencapture location -string "${HOME}/Downloads"
+
+# set screenshot format
+defaults write com.apple.screencapture type -string "png"
+
+# disable screenshot shadows
+defaults write com.apple.screencapture disable-shadow -bool true
+
+# disable personalized ads
+defaults write com.apple.AdLib allowApplePersonalizedAdvertising -int 0
+
+# set system dark mode
+osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to true'
+
+# set background color
+osascript -e 'tell application "Finder" to set desktop picture to POSIX file "/System/Library/Desktop Pictures/Solid Colors/Stone.png"'
+
+# set clock format (Fr. 15. März 19:00)
+defaults write com.apple.menuextra.clock "DateFormat" -string "\"EEE d MMM HH:mm\""
+defaults write com.apple.menuextra.clock "FlashDateSeparators" -bool "true"
+
+# enable 'tap to click'
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults write com.apple.AppleMultitouchTrackpad Clicking -int 1
+defaults write -g com.apple.mouse.tapBehavior -int 1
+defaults -currentHost write -g com.apple.mouse.tapBehavior -int 1
+
+# 'click or tap with two fingers' to the secondary click
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
+defaults write com.apple.AppleMultitouchTrackpad TrackpadRightClick -int 1
+defaults -currentHost write -g com.apple.trackpad.enableSecondaryClick -bool true
+
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 0
+defaults write com.apple.AppleMultitouchTrackpad TrackpadCornerSecondaryClick -int 0
+defaults -currentHost write -g com.apple.trackpad.trackpadCornerClickBehavior -int 0
+
+# restart affected applications if `--no-restart` flag is not present.
+if [[ ! ($* == *--no-restart*) ]]; then
+  for app in "cfprefsd" "Dock" "Finder" "Mail" "SystemUIServer" "Terminal", "Photos"; do
+    killall "${app}" > /dev/null 2>&1
+  done
+fi
