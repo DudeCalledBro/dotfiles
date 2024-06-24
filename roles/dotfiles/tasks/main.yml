@@ -1,0 +1,9 @@
+- name: Configure OSX
+  ansible.builtin.command: "{{ dotfiles_repository_path }}/.macos"
+  changed_when: false
+
+- name: Setup Dotfiles
+  ansible.builtin.copy:
+    src: "{{ dotfiles_repository_path }}/{{ item }}"
+    dest: "{{ dotfiles_destination_path }}/{{ item }}"
+  loop: "{{ dotfiles_files_list }}"

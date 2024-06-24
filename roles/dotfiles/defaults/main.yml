@@ -1,0 +1,11 @@
+dotfiles_repository_path: "{{ playbook_dir }}"
+
+# Set path where dotfiles should be setup
+dotfiles_destination_path: "~"
+
+# Setup the following files
+dotfiles_files_list:
+- .inputrc
+- .vimrc
+- .yamllint
+- .zshrc
