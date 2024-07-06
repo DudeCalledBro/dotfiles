@@ -146,6 +146,9 @@ defaults write com.apple.screencapture disable-shadow -bool true
 # disable personalized ads
 defaults write com.apple.AdLib allowApplePersonalizedAdvertising -int 0
 
+# disable single click desktop to hide all windows and show desktop only in stage manager
+defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
+
 # set system dark mode
 osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to true'
 
@@ -173,7 +176,7 @@ defaults -currentHost write -g com.apple.trackpad.trackpadCornerClickBehavior -i
 
 # restart affected applications if `--no-restart` flag is not present.
 if [[ ! ($* == *--no-restart*) ]]; then
-  for app in "cfprefsd" "Dock" "Finder" "SystemUIServer"; do
+  for app in "cfprefsd" "Dock" "Finder" "SystemUIServer" "WindowManager"; do
     killall "${app}" > /dev/null 2>&1
   done
 fi
