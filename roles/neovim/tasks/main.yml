@@ -1,0 +1,33 @@
+- name: Install Neovim dependency packages
+  community.general.homebrew:
+    name:
+    - neovim
+    - ripgrep
+    state: present
+
+- name: Create Neovim configuration directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    mode: "0755"
+    state: directory
+  loop:
+  - "~/.config/nvim"
+  - "~/.config/nvim/lua"
+
+- name: Manage Neovim init.lua
+  ansible.builtin.template:
+    src: init.lua.j2
+    dest: "~/.config/nvim/init.lua"
+    mode: 0644
+
+- name: Manage Neovim keymaps.lua
+  ansible.builtin.template:
+    src: keymaps.lua.j2
+    dest: "~/.config/nvim/lua/keymaps.lua"
+    mode: 0644
+
+- name: Manage Neovim options.lua
+  ansible.builtin.template:
+    src: options.lua.j2
+    dest: "~/.config/nvim/lua/options.lua"
+    mode: 0644

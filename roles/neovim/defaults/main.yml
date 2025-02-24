@@ -1,0 +1,1 @@
+neovim_config_src: "{{ playbook_dir }}/.config/nvim"

@@ -33,5 +33,7 @@ alias grep="grep --color=auto"
 alias fgrep="fgrep --color=auto"
 alias egrep="egrep --color=auto"
 
+alias vim="nvim"
+
 # Alias for Root SSH Sessions
 alias sshr="ssh -o 'User=root' $@"
