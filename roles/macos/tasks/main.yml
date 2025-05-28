@@ -1,0 +1,7 @@
+---
+- name: Configure MacOS (via script)
+  ansible.builtin.command:
+    cmd: bash macos.sh
+    chdir: "{{ macos_script_path }}"
+  changed_when: true
+  diff: false

@@ -174,6 +174,9 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCorner
 defaults write com.apple.AppleMultitouchTrackpad TrackpadCornerSecondaryClick -int 0
 defaults -currentHost write -g com.apple.trackpad.trackpadCornerClickBehavior -int 0
 
+# enable macos fireall
+/usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
+
 # restart affected applications if `--no-restart` flag is not present.
 if [[ ! ($* == *--no-restart*) ]]; then
   for app in "cfprefsd" "Dock" "Finder" "SystemUIServer" "WindowManager"; do

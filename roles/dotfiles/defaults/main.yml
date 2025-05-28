@@ -7,5 +7,4 @@ dotfiles_destination_path: "~"
 dotfiles_files_list:
 - .inputrc
 - .vimrc
-- .yamllint
 - .zshrc

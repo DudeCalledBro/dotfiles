@@ -1,0 +1,3 @@
+---
+# Set MacOS configuration script path
+macos_script_path: "{{ playbook_dir }}"

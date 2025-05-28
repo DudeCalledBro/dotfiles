@@ -1,8 +1,7 @@
+---
 extends: default
 
 rules:
-  document-start:
-    present: false
   indentation:
     spaces: 2
     indent-sequences: consistent
@@ -10,8 +9,3 @@ rules:
   line-length:
     max: 200
     level: warning
-
-# Ignore CI
-ignore: |
-  .github/*
-  .gitlab/*

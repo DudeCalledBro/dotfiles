@@ -1,0 +1,13 @@
+---
+- name: Setup MacOS
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Include MacOS Role
+      ansible.builtin.include_role:
+        name: macos
+
+    - name: Include Dotfiles Role
+      ansible.builtin.include_role:
+        name: dotfiles
