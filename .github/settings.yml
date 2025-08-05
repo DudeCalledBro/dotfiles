@@ -1,0 +1,4 @@
+---
+repository:
+  description: "My minimal dotfiles and macOS setup."
+  topics: macos, ansible, nix, dotfiles
