@@ -1,0 +1,31 @@
+---
+- name: Update Homebrew Packages
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Gather list of outdated Homebrew packages
+      ansible.builtin.command:
+        cmd: brew outdated --json
+      changed_when: false
+      register: _outdated
+
+    - name: Update Homebrew package manager
+      community.general.homebrew:
+        update_homebrew: true
+
+    - name: Upgrade all outdated Homebrew formulae
+      community.general.homebrew:
+        name: "{{ item.name }}"
+        state: latest
+      loop: "{{ (_outdated.stdout | from_json)['formulae'] }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+    - name: Upgrade all outdated Homebrew casks
+      community.general.homebrew_cask:
+        name: "{{ item.name }}"
+        state: upgraded
+      loop: "{{ (_outdated.stdout | from_json)['casks'] }}"
+      loop_control:
+        label: "{{ item.name }}"
